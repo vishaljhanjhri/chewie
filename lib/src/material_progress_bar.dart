@@ -27,6 +27,9 @@ class MaterialVideoProgressBar extends StatefulWidget {
 class _VideoProgressBarState extends State<MaterialVideoProgressBar> {
   _VideoProgressBarState() {
     listener = () {
+      if (!this.mounted) {
+        return;
+      }
       setState(() {});
     };
   }
@@ -46,6 +49,12 @@ class _VideoProgressBarState extends State<MaterialVideoProgressBar> {
   void deactivate() {
     controller.removeListener(listener);
     super.deactivate();
+  }
+
+  @override
+  void dispose() {
+    controller.removeListener(listener);
+    super.dispose();
   }
 
   @override

@@ -85,6 +85,7 @@ class _MaterialControlsState extends State<MaterialControls> {
 
   void _dispose() {
     controller.removeListener(_updateState);
+    controller.removeListener(_updateState);
     _hideTimer?.cancel();
     _initTimer?.cancel();
     _showAfterExpandCollapseTimer?.cancel();
@@ -357,6 +358,10 @@ class _MaterialControlsState extends State<MaterialControls> {
 
   void _startHideTimer() {
     _hideTimer = Timer(const Duration(seconds: 3), () {
+      if (!mounted) {
+        return;
+      }
+
       setState(() {
         _hideStuff = true;
       });
@@ -364,6 +369,9 @@ class _MaterialControlsState extends State<MaterialControls> {
   }
 
   void _updateState() {
+    if (!mounted) {
+      return;
+    }
     setState(() {
       _latestValue = controller.value;
     });
